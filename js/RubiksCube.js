@@ -55,8 +55,7 @@ var defaults = {"useVirtual":false,
                 "realScrambles":true,
                 "randAUF":true,
                 "prescramble":true,
-                "goInOrder":false,
-                "shuffle":false,
+                "order":"random",
                 "goToNextCase":false,
                 "mirrorAllAlgs":false,
                 "colourneutrality1":"",
@@ -217,15 +216,9 @@ prescramble.addEventListener("click", function(){
     localStorage.setItem("prescramble", this.checked);
 });
 
-var goInOrder = document.getElementById("goInOrder");
-goInOrder.addEventListener("click", function(){
-    localStorage.setItem("goInOrder", this.checked);
-    currentAlgIndex=0;
-});
-
-var shuffle = document.getElementById("shuffle");
-shuffle.addEventListener("click", function(){
-    localStorage.setItem("shuffle", this.checked);
+var order = document.getElementById("order");
+order.addEventListener("change", function(){
+    localStorage.setItem("order", this.value);
     currentAlgIndex=0;
 });
 
@@ -768,7 +761,7 @@ function generateAlgTest(){
         updateAlgsetStatistics(algList);
         shouldRecalculateStatistics = false;
     }
-    if(document.getElementById("shuffle").checked && (shouldRecalculateStatistics || currentAlgIndex%algList.length == 0)){
+    if(document.getElementById("order").value=="shuffled" && (shouldRecalculateStatistics || currentAlgIndex%algList.length == 0)){
         shuffledIndices = Array.from(Array(algList.length).keys());
         shuffleList(shuffledIndices);
     }
@@ -1018,20 +1011,17 @@ function displayAlgorithmForPreviousTest(reTest=true){//not a great name
 
 function randomFromList(set){
 
-    if (document.getElementById("goInOrder").checked){
-        return set[currentAlgIndex++%set.length];
-    }   
-
-    if (document.getElementById("shuffle").checked){
-        return set[shuffledIndices[currentAlgIndex++%set.length]];
+    switch(document.getElementById("order").value){
+        case "random":
+            rand = Math.floor(Math.random()*set.length);
+            return set[rand];
+        case "inOrder":
+            return set[currentAlgIndex++%set.length];
+        case "shuffled":
+            return set[shuffledIndices[currentAlgIndex++%set.length]];
     }
-
-    size = set.length;
-    rand = Math.floor(Math.random()*size);
-
-    return set[rand];
-
 }
+
 var starttime;
 var timerUpdateInterval;
 var timerIsRunning = false;

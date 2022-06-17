@@ -64,8 +64,6 @@ class Gan extends EventEmitter {
   }
 }
 
-// this makes more sense as a method but the anonymous function at the end complains it's not a function
-// maybe i am being stupid
 async function onPollGanCubeCharacteristic(cubeCharacteristic, cube) {
   try {
       const twists = ["U", "?", "U'", "R", "?", "R'", "F", "?", "F'", "D", "?", "D'", "L", "?", "L'", "B", "?", "B'"]
