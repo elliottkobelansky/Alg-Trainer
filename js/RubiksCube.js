@@ -9,6 +9,7 @@ var stickerSize = canvas.width/5;
 var currentAlgIndex = 0;
 var algorithmHistory = [];
 var shouldRecalculateStatistics = true;
+var shuffledIndices = [];
 
 createAlgsetPicker();
 
@@ -55,6 +56,7 @@ var defaults = {"useVirtual":false,
                 "randAUF":true,
                 "prescramble":true,
                 "goInOrder":false,
+                "shuffle":false,
                 "goToNextCase":false,
                 "mirrorAllAlgs":false,
                 "colourneutrality1":"",
@@ -218,6 +220,12 @@ prescramble.addEventListener("click", function(){
 var goInOrder = document.getElementById("goInOrder");
 goInOrder.addEventListener("click", function(){
     localStorage.setItem("goInOrder", this.checked);
+    currentAlgIndex=0;
+});
+
+var shuffle = document.getElementById("shuffle");
+shuffle.addEventListener("click", function(){
+    localStorage.setItem("shuffle", this.checked);
     currentAlgIndex=0;
 });
 
@@ -741,6 +749,13 @@ function correctRotation(alg) {
     return alg + " " + ori;
 }
 
+function shuffleList(list){
+    for(let i=list.length-1; i>0; i--){
+        let n = Math.floor(Math.random()*(i + 1));
+        [list[i],list[n]] = [list[n],list[i]];
+    }
+}
+
 function generateAlgTest(){
 
     var set = document.getElementById("algsetpicker").value;
@@ -752,6 +767,10 @@ function generateAlgTest(){
     if (shouldRecalculateStatistics){
         updateAlgsetStatistics(algList);
         shouldRecalculateStatistics = false;
+    }
+    if(document.getElementById("shuffle").checked && (shouldRecalculateStatistics || currentAlgIndex%algList.length == 0)){
+        shuffledIndices = Array.from(Array(algList.length).keys());
+        shuffleList(shuffledIndices);
     }
     var rawAlgStr = randomFromList(algList);
     var rawAlgs = rawAlgStr.split("/");
@@ -1002,6 +1021,10 @@ function randomFromList(set){
     if (document.getElementById("goInOrder").checked){
         return set[currentAlgIndex++%set.length];
     }   
+
+    if (document.getElementById("shuffle").checked){
+        return set[shuffledIndices[currentAlgIndex++%set.length]];
+    }
 
     size = set.length;
     rand = Math.floor(Math.random()*size);
