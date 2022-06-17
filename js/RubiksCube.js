@@ -18,28 +18,28 @@ window.onbeforeunload = function () {
 }
 Cube.initSolver();
 
-var connectGiiker = document.getElementById("connectGiiker");
-connectGiiker.addEventListener('click', async () => {
+var connectSmartCube = document.getElementById("connectSmartCube");
+connectSmartCube.addEventListener('click', async () => {
 
-    connectGiiker.disabled = true;
+    connectSmartCube.disabled = true;
     try {
-        const giiker = await connect();
-        connectGiiker.textContent = 'Connected!';
+        const smartCube = await connect();
+        connectSmartCube.textContent = 'Connected!';
         setVirtualCube(true);
-        giiker.on('move', (move) => {
+        smartCube.on('move', (move) => {
             doAlg(move.notation);
         });
 
-        giiker.on('disconnected', () => {
-            alert("Giiker cube disconnected");
-            connectGiiker.textContent = 'Connect Giiker Cube';
-            connectGiiker.disabled = false;
+        smartCube.on('disconnected', () => {
+            alert("Smart cube disconnected");
+            connectSmartCube.textContent = 'Connect Smart Cube';
+            connectSmartCube.disabled = false;
         })
     
     } catch(e) {
 
-        connectGiiker.textContent = 'Connect Giiker Cube';
-        connectGiiker.disabled = false;
+        connectSmartCube.textContent = 'Connect Smart Cube';
+        connectSmartCube.disabled = false;
     }
 });
 

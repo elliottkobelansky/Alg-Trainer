@@ -84,45 +84,6 @@ const edgeColors = [
   [b, o]
 ];
 
-class EventEmitter {
-  constructor() {
-    this.listeners = {};
-  }
-
-  on(label, callback) {
-    if (!this.listeners[label]) {
-      this.listeners[label] = [];
-    }
-    this.listeners[label].push(callback);
-  }
-
-  off(label, callback) {
-    let listeners = this.listeners[label];
-
-    if (listeners && listeners.length > 0) {
-      let index = listeners.indexOf(callback);
-      if (index > -1) {
-        listeners.splice(index, 1);
-        this.listeners[label] = listeners;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  emit(label, ...args) {
-    let listeners = this.listeners[label];
-
-    if (listeners && listeners.length > 0) {
-      listeners.forEach((listener) => {
-        listener(...args);
-      });
-      return true;
-    }
-    return false;
-  }
-}
-
 class Giiker extends EventEmitter {
   constructor() {
     super();
@@ -130,23 +91,7 @@ class Giiker extends EventEmitter {
     this._onDisconnected = this._onDisconnected.bind(this);
   }
 
-  async connect() {
-    if (!window.navigator) {
-      throw new Error('window.navigator is not accesible. Maybe you\'re running Node.js?');
-    }
-
-    if (!window.navigator.bluetooth) {
-      throw new Error('Web Bluetooth API is not accesible');
-    }
-
-    const device = await window.navigator.bluetooth.requestDevice({
-      filters: [{
-        namePrefix: 'Gi',
-      }],
-      optionalServices: [SERVICE_UUID, SYSTEM_SERVICE_UUID],
-    });
-
-    const server = await device.gatt.connect();
+  async connect(device, server) {
     const service = await server.getPrimaryService(SERVICE_UUID);
     const characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
     await characteristic.startNotifications();
@@ -444,9 +389,3 @@ class Giiker extends EventEmitter {
     return actualColors;
   }
 }
-
-const connect = async () => {
-  const giiker = new Giiker();
-  await giiker.connect();
-  return giiker;
-};
