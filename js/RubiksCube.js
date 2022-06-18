@@ -235,9 +235,9 @@ order.addEventListener("change", function(){
 
 var goToNextCase = document.getElementById("goToNextCase");
 goToNextCase.addEventListener("click", function(){
-    if (isUsingVirtualCube()){
-        alert("Note: This option has no effect when using the virtual cube.")
-    }
+    // if (isUsingVirtualCube()){
+    //     alert("Note: This option has no effect when using the virtual cube.")
+    // }
     localStorage.setItem("goToNextCase", this.checked);
 });
 
@@ -516,6 +516,11 @@ function doAlg(algorithm){
 
     if (timerIsRunning && cube.isSolved() && isUsingVirtualCube()){
         stopTimer();
+        if (document.getElementById("goToNextCase").checked){
+            nextScramble(false);
+        } else {
+            displayAlgorithmForPreviousTest(false);
+        }
     }
 }
 
@@ -868,8 +873,8 @@ function reTestAlg(){
         return;
     }
     cube.resetCube();
-    doAlg(lastTest.preorientation);
-    doAlg(lastTest.scramble);
+    cube.doAlgorithm(lastTest.preorientation);
+    cube.doAlgorithm(lastTest.scramble);
     drawCube(cube.cubestate);
 
 }
@@ -1437,7 +1442,7 @@ setInterval(updateControls, 300);
 function nextScramble(displayReady=true){
     document.getElementById("scramble").style.color = "white";
     stopTimer(false);
-    if (displayReady){
+    if (displayReady && !isUsingVirtualCube()){
         document.getElementById("timer").innerHTML = 'Ready';
     };
     if (isUsingVirtualCube() ){
