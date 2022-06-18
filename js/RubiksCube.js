@@ -269,6 +269,7 @@ algsetpicker.addEventListener("change", function(){
     createCheckboxes();
 	shouldRecalculateStatistics = true;
     localStorage.setItem("algsetpicker", this.value);
+    currentAlgIndex=0;
 });
 
 var clearTimes = document.getElementById("clearTimes");
