@@ -169,6 +169,16 @@ createCheckboxes();
 drawCube(cube.cubestate);
 updateVisualCube("");
 
+var allSubsets = document.getElementById("allSubsets");
+allSubsets.addEventListener("click", function(){
+    selectAllSubsets();
+});
+
+var clearSubsets = document.getElementById("clearSubsets");
+clearSubsets.addEventListener("click", function(){
+    selectAllSubsets(false);
+});
+
 var useVirtual = document.getElementById("useVirtual");
 useVirtual.addEventListener("click", function(){
     setVirtualCube(this.checked);
@@ -1242,6 +1252,15 @@ function createAlgList(overrideUserDefined=false){
     console.log(algList.length + " algs in list");
 
     return algList;
+}
+
+function selectAllSubsets(bool = true){
+    var set = document.getElementById("algsetpicker").value;
+    if(set){
+        for(var subset in window.algs[set]){
+            document.getElementById(set.toLowerCase() + subset).checked = bool;
+        }
+    }
 }
 
 function mirrorAlgsAcrossM(algList){
