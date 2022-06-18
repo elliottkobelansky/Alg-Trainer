@@ -199,7 +199,8 @@ hideTimer.addEventListener("click", function(){
 var visualCube = document.getElementById("visualcube");
 visualCube.addEventListener("click", function(){
     var currentView = localStorage.getItem("visualCubeView")
-    var newView = currentView == ""? "plan": "";
+    var newView = currentView == "" ? "plan" : (currentView == "plan" ? "&r=y45x34" : "");
+    console.log(newView);
     localStorage.setItem("visualCubeView", newView);
     var algTest = algorithmHistory[historyIndex];
     updateVisualCube(algTest ? algTest.preorientation+algTest.scramble : "");
@@ -954,15 +955,14 @@ function updateVisualCube(algorithm){
             var pzl = "3";
             break;
     }
-
+    
     var view = localStorage.getItem("visualCubeView");
 
-    var imgsrc = "https://www.cubing.net/api/visualcube/?fmt=svg&size=300&view=" + view + "&bg=black&pzl=" + pzl + "&alg=x2" + algorithm;
-
+    var scheme = "";
     if (useCustomColourScheme.checked){
         validateCustomColourScheme();
 
-        imgsrc += "&sch=" + stripLeadingHashtag(customColourD.value) + "," + 
+        scheme = stripLeadingHashtag(customColourD.value) + "," + 
             stripLeadingHashtag(customColourR.value) + "," +
             stripLeadingHashtag(customColourB.value) + "," +
             stripLeadingHashtag(customColourU.value) + "," +
@@ -970,6 +970,35 @@ function updateVisualCube(algorithm){
             stripLeadingHashtag(customColourF.value);
     }
 
+    var imgsrc = "https://www.cubing.net/api/visualcube/?fmt=svg&bg=black&pzl=" + pzl + "&sch=" + scheme +  "&alg=x2" + algorithm;
+    var backImg = document.getElementById("visualcube2");
+
+    // 3D six-side view with additional back view image
+    if(view == "&r=y45x34"){
+        var size = 210;
+        var imgsrc2 = imgsrc + "y2&size=" + size + view;
+        imgsrc += "&size=" + size;
+
+        if(!backImg){
+            backImg = document.createElement("img");
+            backImg.src = imgsrc2;
+            backImg.id = "visualcube2";
+            backImg.addEventListener("click", function(){
+                var currentView = localStorage.getItem("visualCubeView")
+                var newView = currentView == "" ? "plan" : (currentView == "plan" ? "&r=y45x34" : "");
+                localStorage.setItem("visualCubeView", newView);
+                var algTest = algorithmHistory[historyIndex];
+                updateVisualCube(algTest ? algTest.preorientation+algTest.scramble : "");
+            });
+            var front = document.getElementById("visualcube");
+            front.parentNode.insertBefore(backImg,front.nextSibling);
+        }else{
+            backImg.src = imgsrc2;
+        }
+    } else {
+        imgsrc += "&size=300&view=" + view;
+        if(backImg) backImg.remove();
+    }
     document.getElementById("visualcube").src = imgsrc;
 }
 
