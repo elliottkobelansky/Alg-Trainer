@@ -1394,6 +1394,11 @@ function updateControls() {
     });
     listener.register(new KeyCombo("Backspace"), function() { displayAlgorithmForPreviousTest();});
     listener.register(new KeyCombo("Escape"), function() {
+        reTestAlg();
+        document.getElementById("scramble").innerHTML = "&nbsp;";
+        document.getElementById("algdisp").innerHTML = "";
+    })
+    listener.register(new KeyCombo("Escape", {"shift": true}), function() {
         if (isUsingVirtualCube()){
             stopTimer(false);
         }
