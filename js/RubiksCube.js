@@ -1252,6 +1252,7 @@ function findMistakesInUserAlgs(userAlgs){
 }
 
 function createAlgList(overrideUserDefined=false){
+    var algList = [];
 
     if (!overrideUserDefined){
         // Sometimes we want to ignore that the userdefined box is checked, and 
@@ -1261,32 +1262,31 @@ function createAlgList(overrideUserDefined=false){
             if (algList.length==0){
                 alert("Please enter some algs into the User Defined Algs box.");
             }
-            return algList;
+            //return algList;
         }
-    }
-    var algList = [];
+    }else{
+        var set = document.getElementById("algsetpicker").value;
 
-    var set = document.getElementById("algsetpicker").value;
-
-    if (set == ""){
-        return ["R U R' U' R' F R2 U' R' U' R U R' F'"];
-    }
-
-    for (var subset in window.algs[set]){
-
-        if(document.getElementById(set.toLowerCase() + subset).checked){
-            algList = algList.concat(window.algs[set][subset]);
+        if (set == ""){
+            return ["R U R' U' R' F R2 U' R' U' R U R' F'"];
         }
-    }
 
-    if(algList.length < 1){ //if nothing checked, test on the whole subset
         for (var subset in window.algs[set]){
-            algList = algList.concat(window.algs[set][subset]);
-        }
-        // console.log(algList.length + " algs in list");
-        // return algList;
-    }
 
+            if(document.getElementById(set.toLowerCase() + subset).checked){
+                algList = algList.concat(window.algs[set][subset]);
+            }
+        }
+
+        if(algList.length < 1){ //if nothing checked, test on the whole subset
+            for (var subset in window.algs[set]){
+                algList = algList.concat(window.algs[set][subset]);
+            }
+            // console.log(algList.length + " algs in list");
+            // return algList;
+        }
+    }
+    
     for (var alg in excludedAlgs){
         var idx = algList.indexOf(excludedAlgs[alg]);
         if(idx > -1) algList.splice(idx,1);
