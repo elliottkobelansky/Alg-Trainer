@@ -10,6 +10,7 @@ var currentAlgIndex = 0;
 var algorithmHistory = [];
 var shouldRecalculateStatistics = true;
 var shuffledIndices = [];
+var excludedAlgs = [];
 
 createAlgsetPicker();
 
@@ -270,6 +271,7 @@ algsetpicker.addEventListener("change", function(){
 	shouldRecalculateStatistics = true;
     localStorage.setItem("algsetpicker", this.value);
     currentAlgIndex=0;
+    excludedAlgs = [];
 });
 
 var clearTimes = document.getElementById("clearTimes");
@@ -1281,9 +1283,15 @@ function createAlgList(overrideUserDefined=false){
         for (var subset in window.algs[set]){
             algList = algList.concat(window.algs[set][subset]);
         }
-        console.log(algList.length + " algs in list");
-        return algList;
+        // console.log(algList.length + " algs in list");
+        // return algList;
     }
+
+    for (var alg in excludedAlgs){
+        var idx = algList.indexOf(excludedAlgs[alg]);
+        if(idx > -1) algList.splice(idx,1);
+    }
+
     console.log(algList.length + " algs in list");
 
     return algList;
@@ -1439,6 +1447,20 @@ function updateControls() {
 
         displayAlgorithmFromHistory(historyIndex);
     });
+    listener.register(new KeyCombo("KeyD", {"alt": true}), function(){
+        var lastTest = algorithmHistory[algorithmHistory.length-1];
+        var caseAlgs = lastTest.rawAlgs.join("/");
+        if(excludedAlgs.indexOf(caseAlgs) === -1) excludedAlgs.push(caseAlgs);
+    });
+    listener.register(new KeyCombo("KeyD", {"alt": true, "shift":true}), function(){
+        var lastTest = algorithmHistory[algorithmHistory.length-1];
+        var caseAlgs = lastTest.rawAlgs.join("/");
+        var idx = excludedAlgs.indexOf(caseAlgs);
+        if(idx > -1) excludedAlgs.splice(idx, 1);
+    });
+    listener.register(new KeyCombo("KeyR", {"alt": true}), function(){
+        excludedAlgs = [];
+    })
 }
 
 setInterval(updateControls, 300);
