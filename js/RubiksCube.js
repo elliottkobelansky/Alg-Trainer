@@ -1446,18 +1446,28 @@ function updateControls() {
         displayAlgorithmFromHistory(historyIndex);
     });
     listener.register(new KeyCombo("KeyD", {"alt": true}), function(){
-        var lastTest = algorithmHistory[algorithmHistory.length-1];
+        var lastTest = algorithmHistory[historyIndex];//[algorithmHistory.length-1];
         var caseAlgs = lastTest.rawAlgs.join("/");
-        if(excludedAlgs.indexOf(caseAlgs) === -1) excludedAlgs.push(caseAlgs);
+        if(excludedAlgs.indexOf(caseAlgs) === -1){
+            excludedAlgs.push(caseAlgs);
+            shouldRecalculateStatistics = true;
+            alert("Successfully excluded case!");
+        }
     });
     listener.register(new KeyCombo("KeyD", {"alt": true, "shift":true}), function(){
-        var lastTest = algorithmHistory[algorithmHistory.length-1];
+        var lastTest = algorithmHistory[historyIndex];
         var caseAlgs = lastTest.rawAlgs.join("/");
         var idx = excludedAlgs.indexOf(caseAlgs);
-        if(idx > -1) excludedAlgs.splice(idx, 1);
+        if(idx > -1){
+            excludedAlgs.splice(idx, 1);
+            shouldRecalculateStatistics = true;
+            alert("Successfully undid case exclusion!");
+        }
     });
     listener.register(new KeyCombo("KeyR", {"alt": true}), function(){
         excludedAlgs = [];
+        shouldRecalculateStatistics = true;
+        alert("Cleared case exclusion list!");
     })
 }
 
