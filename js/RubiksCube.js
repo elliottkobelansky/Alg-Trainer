@@ -1254,16 +1254,14 @@ function findMistakesInUserAlgs(userAlgs){
 function createAlgList(overrideUserDefined=false){
     var algList = [];
 
-    if (!overrideUserDefined){
+    if (!overrideUserDefined && document.getElementById("userDefined").checked){
         // Sometimes we want to ignore that the userdefined box is checked, and 
         // retrieve whatever is selected from the trainer itself
-        if (document.getElementById("userDefined").checked){
-            algList = findMistakesInUserAlgs(document.getElementById("userDefinedAlgs").value.split("\n"));
-            if (algList.length==0){
-                alert("Please enter some algs into the User Defined Algs box.");
-            }
-            //return algList;
+        algList = findMistakesInUserAlgs(document.getElementById("userDefinedAlgs").value.split("\n"));
+        if (algList.length==0){
+            alert("Please enter some algs into the User Defined Algs box.");
         }
+        //return algList;
     }else{
         var set = document.getElementById("algsetpicker").value;
 
