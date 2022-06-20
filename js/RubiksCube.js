@@ -772,7 +772,8 @@ function generateAlgTest(){
         updateAlgsetStatistics(algList);
         shouldRecalculateStatistics = false;
     }
-    if(document.getElementById("order").value=="shuffled" && (shouldRecalculateStatistics || currentAlgIndex%algList.length == 0)){
+    // reshuffle when new set/subset selection (index will be set to 0) or full run complete
+    if(document.getElementById("order").value=="shuffled" && currentAlgIndex%algList.length == 0){
         shuffledIndices = Array.from(Array(algList.length).keys());
         shuffleList(shuffledIndices);
     }
