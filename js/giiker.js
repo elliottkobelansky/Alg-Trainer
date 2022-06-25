@@ -117,6 +117,8 @@ class Giiker extends EventEmitter {
   }
 
   _onDisconnected() {
+    this.device.removeEventListener('characteristicvaluechanged', this._onCharacteristicValueChanged);
+    this.device.removeEventListener('gattserverdisconnected', this._onDisconnected);
     this._device = null;
     this.emit('disconnected');
   }
