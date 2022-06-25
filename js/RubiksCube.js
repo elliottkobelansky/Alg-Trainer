@@ -10,6 +10,7 @@ var currentAlgIndex = 0;
 var algorithmHistory = [];
 var shouldRecalculateStatistics = true;
 var shuffledIndices = [];
+var smartCube = null;
 
 createAlgsetPicker();
 
@@ -20,26 +21,31 @@ Cube.initSolver();
 
 var connectSmartCube = document.getElementById("connectSmartCube");
 connectSmartCube.addEventListener('click', async () => {
+    if(!smartCube){
+        connectSmartCube.disabled = true;
+        try {
+            connectSmartCube.textContent = 'Connecting...';
+            smartCube = await connect();
+            connectSmartCube.textContent = 'Disconnect';
+            setVirtualCube(true);
+            smartCube.on('move', (move) => {
+                doAlg(move.notation);
+            });
 
-    connectSmartCube.disabled = true;
-    try {
-        const smartCube = await connect();
-        connectSmartCube.textContent = 'Connected!';
-        setVirtualCube(true);
-        smartCube.on('move', (move) => {
-            doAlg(move.notation);
-        });
+            smartCube.on('disconnected', () => {
+                alert("Smart cube disconnected");
+                connectSmartCube.textContent = 'Connect Smart Cube';
+                
+            })
+            connectSmartCube.disabled = false;
+        } catch(e) {
 
-        smartCube.on('disconnected', () => {
-            alert("Smart cube disconnected");
             connectSmartCube.textContent = 'Connect Smart Cube';
             connectSmartCube.disabled = false;
-        })
-    
-    } catch(e) {
-
-        connectSmartCube.textContent = 'Connect Smart Cube';
-        connectSmartCube.disabled = false;
+        }
+    } else {
+        smartCube.disconnect();
+        smartCube = null;
     }
 });
 

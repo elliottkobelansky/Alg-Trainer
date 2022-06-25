@@ -59,6 +59,7 @@ class Gan extends EventEmitter {
   }
 
   _onDisconnected() {
+    this._device.removeEventListener('gattserverdisconnected', this._onDisconnected);
     this._device = null;
     this.emit('disconnected');
   }
