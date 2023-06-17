@@ -46,10 +46,11 @@ const connect = async () => {
         throw new Error('Web Bluetooth API is not accesible');
       }
     const device = await window.navigator.bluetooth.requestDevice({
-        filters: [{ namePrefix: 'Gi' }, { namePrefix: "GAN-" }],
+        filters: [{ namePrefix: 'Gi' }, { namePrefix: "GAN-" }, { namePrefix: "GoCube_"}, { namePrefix: "Rubiks_"}],
         optionalServices: [
             SERVICE_UUID, SYSTEM_SERVICE_UUID,
             GAN_SERVICE_UUID, GAN_SERVICE_UUID_META,
+            GOCUBE_SERVICE_UUID
         ]
         });
 
@@ -60,6 +61,9 @@ const connect = async () => {
     }
     if(server.device.name.startsWith("GAN-")){
         smartCube = new Gan();
+    }
+    if(server.device.name.startsWith("GoCube_") || server.device.name.startsWith("Rubiks_")){
+      smartcube = new GoCube();
     }
     
     if(smartCube){

@@ -9,6 +9,8 @@ const GAN_ENCRYPTION_KEYS = [
     "NoRgnAHANATADDWJYwMxQOxiiEcfYgSK6Hpr4TYCs0IG1OEAbDszALpA",
     "NoNg7ANATFIQnARmogLBRUCs0oAYN8U5J45EQBmFADg0oJAOSlUQF0g"];
 
+const ganTwists = ["U", "?", "U'", "R", "?", "R'", "F", "?", "F'", "D", "?", "D'", "L", "?", "L'", "B", "?", "B'"]
+
 // currently just spits out the outer quarter block turn which is all the trainer is using
 // doesn't do anything with battery, cube state, or other bells and whistles
 class Gan extends EventEmitter {
@@ -67,7 +69,6 @@ class Gan extends EventEmitter {
 
 async function onPollGanCubeCharacteristic(cubeCharacteristic, cube) {
   try {
-      const twists = ["U", "?", "U'", "R", "?", "R'", "F", "?", "F'", "D", "?", "D'", "L", "?", "L'", "B", "?", "B'"]
       var val;
       try
       {
@@ -94,7 +95,7 @@ async function onPollGanCubeCharacteristic(cubeCharacteristic, cube) {
               cube.lastCount = count;
               for (var i = 19 - missed; i < 19; i++) {
                   var t = val.getUint8(i);
-                  cube.emit('move', {face:'?',amount:-1,notation:twists[t]});
+                  cube.emit('move', {notation:ganTwists[t]});
               }
           }
       }
