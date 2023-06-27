@@ -8,6 +8,7 @@ const gocubeTwists = ["B", "B'", "F", "F'", "U", "U'", "D", "D'", "R", "R'", "L"
 class GoCube extends EventEmitter {
   constructor() {
     super();
+    this._onCharacteristicValueChanged = this._onCharacteristicValueChanged.bind(this);
     this._onDisconnected = this._onDisconnected.bind(this);
   }
 
