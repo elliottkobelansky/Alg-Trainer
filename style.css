@@ -1,5 +1,5 @@
 body {
-    background: black;
+    background: #282C34;
     font-family: Arial;
     color: white;
 }
@@ -31,6 +31,9 @@ hr {
     font-size: 20px;
 }
 
+.hidden {
+    display: none;
+}
 p.scramble {
     vertical-align: middle; 
     text-align: center;

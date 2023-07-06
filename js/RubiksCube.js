@@ -60,11 +60,9 @@ var defaults = {"useVirtual":false,
                 "hideTimer":false,
                 "showScramble":true,
                 "realScrambles":true,
-                "randAUF":true,
                 "prescramble":true,
                 "order":"random",
                 "goToNextCase":false,
-                "mirrorAllAlgs":false,
                 "colourneutrality1":"",
                 "colourneutrality2":"x2",
                 "colourneutrality3":"y",
@@ -73,13 +71,12 @@ var defaults = {"useVirtual":false,
                 "fullCN":false,
                 "cubeType":"3x3",
                 "algsetpicker":document.getElementById("algsetpicker").options[0].value,
-                "useCustomColourScheme":false,
-                "customColourU":"white",
-                "customColourD":"yellow",
-                "customColourF":"green",
-                "customColourB":"blue",
-                "customColourR":"red",
-                "customColourL":"orange",
+                "customColourU":"yellow",
+                "customColourD":"white",
+                "customColourF":"red",
+                "customColourB":"orange",
+                "customColourR":"green",
+                "customColourL":"blue",
                 "visualCubeView":"plan"
                };
 
@@ -122,54 +119,6 @@ document.getElementById("lines").addEventListener("change", function(){
     drawCube(cube.cubestate);    
 });
 
-var useCustomColourScheme = document.getElementById("useCustomColourScheme");
-useCustomColourScheme.addEventListener("click", function(){
-    localStorage.setItem("useCustomColourScheme", this.checked);
-
-    var algTest = algorithmHistory[historyIndex];
-    updateVisualCube(algTest ? algTest.preorientation+algTest.scramble : "");
-
-    drawCube(cube.cubestate);    
-});
-
-var customColourU = document.getElementById("customColourU");
-var customColourD = document.getElementById("customColourD");
-var customColourF = document.getElementById("customColourF");
-var customColourB = document.getElementById("customColourB");
-var customColourR = document.getElementById("customColourR");
-var customColourL = document.getElementById("customColourL");
-
-var customColours = [customColourU, customColourD, customColourF,
-                     customColourB, customColourR, customColourL];
-
-for (var i = 0; i < customColours.length; i++) {
-    customColours[i].addEventListener("change", function(){
-        this.value = this.value.trim();
-        localStorage.setItem(this.id, this.value);
-
-        var algTest = algorithmHistory[historyIndex];
-        updateVisualCube(algTest ? algTest.preorientation+algTest.scramble : "");
-
-        drawCube(cube.cubestate);
-    });
-}
-
-var resetCustomColourScheme = document.getElementById("resetCustomColourScheme");
-resetCustomColourScheme.addEventListener("click", function(){
-    if (confirm("Reset custom colour scheme?")){
-        for (var setting in defaults){
-            if (setting.indexOf( "customColour" ) > -1){
-                document.getElementById(setting).value = defaults[setting];
-                localStorage.setItem(setting, defaults[setting]);
-            }
-        }
-
-        var algTest = algorithmHistory[historyIndex];
-        updateVisualCube(algTest ? algTest.preorientation+algTest.scramble : "");
-
-        drawCube(cube.cubestate);                
-    }
-});
 
 setVirtualCube(document.getElementById("useVirtual").checked);
 createCheckboxes();
@@ -224,11 +173,6 @@ realScrambles.addEventListener("click", function(){
     localStorage.setItem("realScrambles", this.checked);
 });
 
-var randAUF = document.getElementById("randAUF");
-randAUF.addEventListener("click", function(){
-    localStorage.setItem("randAUF", this.checked);
-});
-
 var prescramble = document.getElementById("prescramble");
 prescramble.addEventListener("click", function(){
     localStorage.setItem("prescramble", this.checked);
@@ -246,11 +190,6 @@ goToNextCase.addEventListener("click", function(){
     //     alert("Note: This option has no effect when using the virtual cube.")
     // }
     localStorage.setItem("goToNextCase", this.checked);
-});
-
-var mirrorAllAlgs = document.getElementById("mirrorAllAlgs");
-mirrorAllAlgs.addEventListener("click", function(){
-    localStorage.setItem("mirrorAllAlgs", this.checked);
 });
 
 var userDefined = document.getElementById("userDefined");
@@ -280,24 +219,6 @@ algsetpicker.addEventListener("change", function(){
     excludedAlgs = [];
 });
 
-var clearTimes = document.getElementById("clearTimes");
-clearTimes.addEventListener("click", function(){
-
-    if (confirm("Clear all times?")){
-        timeArray = [];
-        updateTimeList();
-        updateStats();
-    }
-
-});
-
-var deleteLast = document.getElementById("deleteLast");
-deleteLast.addEventListener("click", function(){
-    timeArray.pop();
-    algorithmHistory.pop();
-    updateTimeList();
-    updateStats();
-});
 
 var addSelected = document.getElementById("addSelected");
 addSelected.addEventListener("click", function(){
@@ -340,46 +261,22 @@ function fillWithIndex(x, y, face, index, cubeArray, shouldBeCleared = false) {
     var colour;
     switch (sticker) {
         case 1:
-            if (useCustomColourScheme.checked){
-                colour = customColourU.value;
-            } else {
-                colour = defaults["customColourU"];
-            }
+            colour = defaults["customColourU"];
             break;
         case 2:
-            if (useCustomColourScheme.checked){
-                colour = customColourR.value;
-            } else {
-                colour = defaults["customColourR"];
-            }
+            colour = defaults["customColourR"];
             break;
         case 3:
-            if (useCustomColourScheme.checked){
-                colour = customColourF.value;
-            } else {
-                colour = defaults["customColourF"];
-            }
+            colour = defaults["customColourF"];
             break;
         case 4:
-            if (useCustomColourScheme.checked){
-                colour = customColourD.value;
-            } else {
-                colour = defaults["customColourD"];
-            }
+            colour = defaults["customColourD"];
             break;
         case 5:
-            if (useCustomColourScheme.checked){
-                colour = customColourL.value;
-            } else {
-                colour = defaults["customColourL"];
-            }
+            colour = defaults["customColourL"];
             break;
         case 6:
-            if (useCustomColourScheme.checked){
-                colour = customColourB.value;
-            } else {
-                colour = defaults["customColourB"];
-            }
+            colour = defaults["customColourB"];
             break;
     }
     if(shouldBeCleared){
@@ -779,7 +676,6 @@ function generateAlgTest(){
     var set = document.getElementById("algsetpicker").value;
     var obfusticateAlg = document.getElementById("realScrambles").checked;
     var shouldPrescramble = document.getElementById("prescramble").checked;
-    var randAUF = document.getElementById("randAUF").checked;
 
     var algList = createAlgList()
     if (shouldRecalculateStatistics){
@@ -794,16 +690,8 @@ function generateAlgTest(){
     var rawAlgStr = randomFromList(algList);
     var rawAlgs = rawAlgStr.split("/");
     rawAlgs = fixAlgorithms(rawAlgs);
-    if (mirrorAllAlgs.checked){
-        rawAlgs = mirrorAlgsAcrossM(rawAlgs);
-    }
     var solutions;
-    if (randAUF){
-        solutions = addAUFs(rawAlgs);
-    } else {
-        solutions = rawAlgs;
-    }
-
+    solutions = rawAlgs;
     var scramble = generateAlgScramble(correctRotation(solutions[0]),set,obfusticateAlg,shouldPrescramble);
     if (set == "F3L"){
         solutions = [alg.cube.invert(scramble).replace(/2'/g, "2")];
@@ -851,24 +739,16 @@ function updateAlgsetStatistics(algList){
         var stats = {"Number of algs": "43,252,003,274,489,856,000"};
     }
     else {
-        var stats = {"STM": averageMovecount(algList, "btm", false).toFixed(3),
-                 "SQTM": averageMovecount(algList, "bqtm", false).toFixed(3),
-                 "STM (including AUF)": averageMovecount(algList, "btm", true).toFixed(3),
-                 "SQTM (including AUF)": averageMovecount(algList, "bqtm", true).toFixed(3),
-                 "Number of algs": algList.length};
+        var stats = {"Algs Left": algList.length};
     }
     var table = document.getElementById("algsetStatistics");
     table.innerHTML = "";
     var th = document.createElement("th");
-    th.appendChild(document.createTextNode("Algset Statistics"));
     table.appendChild(th);
     for (var key in stats){
         var tr = document.createElement("tr");
-        var description = document.createElement("td");
         var value = document.createElement("td");
-        description.appendChild(document.createTextNode(key));
         value.appendChild(document.createTextNode(stats[key]));
-        tr.appendChild(description);
         tr.appendChild(value);
         table.appendChild(tr);
     }
@@ -933,6 +813,7 @@ function validTextColour(stringToTest) {
 }
 
 function validateCustomColourScheme(){
+    return
     var invalidColours = [];
 
     for (var i = 0; i < customColours.length; i++) {
@@ -973,19 +854,9 @@ function updateVisualCube(algorithm){
     
     var view = localStorage.getItem("visualCubeView");
 
-    var scheme = "";
-    if (useCustomColourScheme.checked){
-        validateCustomColourScheme();
+    var scheme = "white,green,orange,yellow,blue,red";
 
-        scheme = stripLeadingHashtag(customColourD.value) + "," + 
-            stripLeadingHashtag(customColourR.value) + "," +
-            stripLeadingHashtag(customColourB.value) + "," +
-            stripLeadingHashtag(customColourU.value) + "," +
-            stripLeadingHashtag(customColourL.value) + "," + 
-            stripLeadingHashtag(customColourF.value);
-    }
-
-    var imgsrc = "https://www.cubing.net/api/visualcube/?fmt=svg&bg=black&pzl=" + pzl + "&sch=" + scheme +  "&alg=x2" + algorithm;
+    var imgsrc = "https://www.cubing.net/api/visualcube/?fmt=svg&bg=282C34&pzl=" + pzl + "&sch=" + scheme +  "&alg=x2" + algorithm;
     var backImg = document.getElementById("visualcube2");
 
     // 3D six-side view with additional back view image
@@ -1144,6 +1015,7 @@ function getMean(timeArray){
 }
 
 function updateStats(){
+    return
     var statistics = document.getElementById("statistics");
 
     statistics.innerHTML = "&nbsp";
@@ -1157,13 +1029,7 @@ function updateStats(){
 
 
 function updateTimeList(){
-    var i;
-    var timeList = document.getElementById("timeList");
-    timeList.innerHTML = "&nbsp";
-    for (i=0; i<timeArray.length;i++){
-        timeList.innerHTML += timeArray[i].toString();
-        timeList.innerHTML += " ";
-    }
+    return
 }
 
 //Create Checkboxes for each subset
@@ -1452,13 +1318,12 @@ function updateControls() {
 
         displayAlgorithmFromHistory(historyIndex);
     });
-    listener.register(new KeyCombo("KeyD", {"alt": true}), function(){
+    listener.register(new KeyCombo("Enter", {"shift": true}), function(){
         var lastTest = algorithmHistory[historyIndex];//[algorithmHistory.length-1];
         var caseAlgs = lastTest.rawAlgs.join("/");
         if(excludedAlgs.indexOf(caseAlgs) === -1){
             excludedAlgs.push(caseAlgs);
             shouldRecalculateStatistics = true;
-            alert("Successfully excluded case!");
         }
     });
     listener.register(new KeyCombo("KeyD", {"alt": true, "shift":true}), function(){
