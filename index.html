@@ -27,7 +27,6 @@
                 <h2>Settings</h2>
                 <form action="javascript:void(0);">
                     
-                    <input id="useVirtual" type="checkbox">VC<br>
                     <input id="hideTimer" type="checkbox">Hide timer<br>
                     <input id="showScramble" type="checkbox">Show Scramble<br>
                     <input id="realScrambles" type="checkbox">Real Scrambles<br>
@@ -55,12 +54,6 @@
                     
                     <input id="userDefined" type="checkbox">User defined algset <button id="addSelected">Add currently selected algs</button><br>
                     <textarea id="userDefinedAlgs" cols=50 rows=50 style="display:none" onfocus="listener.stop_listening();" onblur="listener.listen();" placeholder="Place one alg per line. Lines starting with # will be ignored"></textarea>
-                    <br>
-                    <input style="hidden" id="fullCN" type="checkbox"> Full CN<br>
-                    or<br>
-                    <input style="hidden" type="text" id="colourneutrality1" value="" onfocus="listener.stop_listening();" onblur="listener.listen();" size="1"> 
-                    <input style="hidden" type="text" id="colourneutrality2" value="" onfocus="listener.stop_listening();" onblur="listener.listen();" size="1"> 
-                    <input style="hidden" type="text" id="colourneutrality3" value="" onfocus="listener.stop_listening();" onblur="listener.listen();" size="1"> 
                     <br><br>
                 </form>
             </div>
@@ -68,7 +61,7 @@
 
 
             <div class=column_middle>
-                <div id="simcube"> 
+                <div display=none id="simcube"> 
                     <canvas id="cube" width="250" height="300" ></canvas>
                 </div>
 
@@ -79,24 +72,15 @@
                 <div id="algdisplayer"> 
                     <p id="algdisp" class=algdisp>Solution</p>
                 </div>
-
-                <div id="controls">
-                    <button onclick="nextScramble()">Next</button>
+                <div style="text-align: center">
+                    <div style="text-align: center"id="algsetStatistics">
+                    </div>
                 </div>
             </div>
 
 
-
             <div class=column_right>
                 <img src="https://www.cubing.net/api/visualcube/?fmt=svg&size=300&view=plan&bg=black&alg=x2" id="visualcube" title="Click to switch between flat and 3D view"/>
-
-                <div style="hidden">
-                <p id="statistics">&nbsp</p>
-                <div style="text-align: left">
-                    <br><br>
-                    <table id="algsetStatistics">
-                    </table>
-                </div>
             </div>
         </div>
 

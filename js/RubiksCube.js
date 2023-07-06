@@ -1,3 +1,5 @@
+toggleVirtualCube();
+
 var currentRotation = "";
 var cube = new RubiksCube();
 var currentAlgorithm = "";//After an alg gets tested for the first time, it becomes the currentAlgorithm.
@@ -56,7 +58,7 @@ function showPage(){
     document.getElementById("page").style.display = "block";
 }
 
-var defaults = {"useVirtual":false,
+var defaults = {
                 "hideTimer":false,
                 "showScramble":true,
                 "realScrambles":true,
@@ -64,11 +66,10 @@ var defaults = {"useVirtual":false,
                 "order":"random",
                 "goToNextCase":false,
                 "colourneutrality1":"",
-                "colourneutrality2":"x2",
-                "colourneutrality3":"y",
+                "colourneutrality2":"",
+                "colourneutrality3":"",
                 "userDefined":false,
                 "userDefinedAlgs":"",
-                "fullCN":false,
                 "cubeType":"3x3",
                 "algsetpicker":document.getElementById("algsetpicker").options[0].value,
                 "customColourU":"yellow",
@@ -120,7 +121,6 @@ document.getElementById("lines").addEventListener("change", function(){
 });
 
 
-setVirtualCube(document.getElementById("useVirtual").checked);
 createCheckboxes();
 drawCube(cube.cubestate);
 updateVisualCube("");
@@ -135,13 +135,6 @@ clearSubsets.addEventListener("click", function(){
     selectAllSubsets(false);
 });
 
-var useVirtual = document.getElementById("useVirtual");
-useVirtual.addEventListener("click", function(){
-    setVirtualCube(this.checked);
-    localStorage.setItem("useVirtual", this.checked);
-    stopTimer(false);
-    document.getElementById("timer").innerHTML = "0.00";
-});
 
 var hideTimer = document.getElementById("hideTimer");
 hideTimer.addEventListener("click", function(){
@@ -198,10 +191,6 @@ userDefined.addEventListener("click", function(){
     localStorage.setItem("userDefined", this.checked);
 });
 
-var fullCN = document.getElementById("fullCN");
-fullCN.addEventListener("click", function(){
-    localStorage.setItem("fullCN", this.checked);
-});
 
 var cubeType = document.getElementById("cubeType");
 cubeType.addEventListener("change", function(){
@@ -601,43 +590,10 @@ function generatePreScramble(raw_alg, generator, times, obfusticateAlg, premoves
 
 }
 function generateOrientation(){
+    return ["", ""]
 
 
-    var cn1 = document.getElementById("colourneutrality1").value;
-    if (document.getElementById("fullCN").checked){
-        var firstRotation = ["", "x", "x'", "x2", "y", "y'"]
-        // each one of these first rotations puts a differnt color face on F
-        var secondRotation = ["", "z", "z'", "z2"]
-        // each second rotation puts a different edge on UF
-        // each unique combination of a first and second rotation 
-        // must result in a unique orientation because a different color is on F
-        // and a different edge is on UF. Hence all 6x4=24 rotations are reached.
 
-        var rand1 = Math.floor(Math.random()*6);
-        var rand2 = Math.floor(Math.random()*4);
-        var randomPart = firstRotation[rand1] + secondRotation[rand2];
-        if (randomPart == "x2z2"){
-            randomPart = "y2";
-        }
-        var fullOrientation = cn1 + randomPart; // Preorientation to perform starting from white top green front
-        return [fullOrientation, randomPart];
-    }
-    var cn2 = document.getElementById("colourneutrality2").value;
-    var cn3 = document.getElementById("colourneutrality3").value;
-
-    //todo: warn if user enters invalid strings
-
-    localStorage.setItem("colourneutrality1", cn1);
-    localStorage.setItem("colourneutrality2", cn2);
-    localStorage.setItem("colourneutrality3", cn3);
-
-    var rand1 = Math.floor(Math.random()*4);
-    var rand2 = Math.floor(Math.random()*4);
-
-    //console.log(cn1 + cn2.repeat(rand1) + cn3.repeat(rand2));
-    var randomPart = cn2.repeat(rand1) + cn3.repeat(rand2); // Random part of the orientation
-    var fullOrientation = cn1 + randomPart; // Preorientation to perform starting from white top green front
-    return [fullOrientation, randomPart];
 }
 
 class AlgTest {
@@ -742,7 +698,8 @@ function updateAlgsetStatistics(algList){
         var stats = {"Algs Left": algList.length};
     }
     var table = document.getElementById("algsetStatistics");
-    table.innerHTML = "";
+    table.innerHTML = stats["Algs Left"];
+    return;
     var th = document.createElement("th");
     table.appendChild(th);
     for (var key in stats){
@@ -890,10 +847,6 @@ function updateVisualCube(algorithm){
 
 function displayAlgorithm(algTest, reTest=true){    
 
-    //If reTest is true, the scramble will also be setup on the virtual cube
-    if (reTest){
-        reTestAlg();
-    }
 
     updateTrainer(algTest.scramble, algTest.solutions.join("<br><br>"), null, null);
 
@@ -925,9 +878,6 @@ function displayAlgorithmForPreviousTest(reTest=true){//not a great name
         return;
     }
     //If reTest is true, the scramble will also be setup on the virtual cube
-    if (reTest){
-        reTestAlg();
-    }
 
     updateTrainer("<span style=\"color: #90f182\">" + lastTest.orientRandPart + "</span>" + " "+ lastTest.scramble, lastTest.solutions.join("<br><br>"), null, null);
 
@@ -1209,12 +1159,7 @@ function averageMovecount(algList, metric, includeAUF){
 function toggleVirtualCube(){
     var sim = document.getElementById("simcube");
 
-    if (sim.style.display == 'none'){
-        sim.style.display = 'block';
-    }
-    else {
-        sim.style.display = 'none';
-    }
+    sim.style.display = 'none';
 }
 
 function setVirtualCube(setting){
@@ -1231,7 +1176,6 @@ function setVirtualCube(setting){
 function setTimerDisplay(setting){
     var timer = document.getElementById("timer");
     if (!isUsingVirtualCube()){
-        alert("The timer can only be hidden when using the simulator cube.");
         document.getElementById("hideTimer").checked = false;
     }
     else if (setting){
@@ -1243,7 +1187,6 @@ function setTimerDisplay(setting){
 
 function isUsingVirtualCube(){
     var sim = document.getElementById("simcube")
-
     if (sim.style.display == 'none'){
         return false;
     }
@@ -1352,13 +1295,8 @@ function nextScramble(displayReady=true){
     if (displayReady && !isUsingVirtualCube()){
         document.getElementById("timer").innerHTML = 'Ready';
     };
-    if (isUsingVirtualCube() ){
-        testAlg(generateAlgTest());
-        startTimer();
-    }
-    else {
-        testAlg(generateAlgTest());
-    }
+    testAlg(generateAlgTest());
+    
     historyIndex = algorithmHistory.length - 1;
 }
 
