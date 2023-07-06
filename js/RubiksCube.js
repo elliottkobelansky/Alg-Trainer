@@ -22,35 +22,6 @@ window.onbeforeunload = function () {
 }
 Cube.initSolver();
 
-var connectSmartCube = document.getElementById("connectSmartCube");
-connectSmartCube.addEventListener('click', async () => {
-    if(!smartCube){
-        connectSmartCube.disabled = true;
-        try {
-            connectSmartCube.textContent = 'Connecting...';
-            smartCube = await connect();
-            connectSmartCube.textContent = 'Disconnect';
-            setVirtualCube(true);
-            smartCube.on('move', (move) => {
-                doAlg(move.notation);
-            });
-
-            smartCube.on('disconnected', () => {
-                alert("Smart cube disconnected");
-                connectSmartCube.textContent = 'Connect Smart Cube';
-                
-            })
-            connectSmartCube.disabled = false;
-        } catch(e) {
-
-            connectSmartCube.textContent = 'Connect Smart Cube';
-            connectSmartCube.disabled = false;
-        }
-    } else {
-        smartCube.disconnect();
-        smartCube = null;
-    }
-});
 
 document.getElementById("loader").style.display = "none";
 var myVar = setTimeout(showPage, 1);
@@ -59,18 +30,12 @@ function showPage(){
 }
 
 var defaults = {
-                "hideTimer":false,
-                "showScramble":true,
-                "realScrambles":true,
-                "prescramble":true,
                 "order":"random",
-                "goToNextCase":false,
                 "colourneutrality1":"",
                 "colourneutrality2":"",
                 "colourneutrality3":"",
                 "userDefined":false,
                 "userDefinedAlgs":"",
-                "cubeType":"3x3",
                 "algsetpicker":document.getElementById("algsetpicker").options[0].value,
                 "customColourU":"yellow",
                 "customColourD":"white",
@@ -111,15 +76,10 @@ for (var setting in defaults){
     }
 }
 
-setTimerDisplay(!document.getElementById("hideTimer").checked);
+setTimerDisplay(false);
 if (document.getElementById("userDefined").checked){
     document.getElementById("userDefinedAlgs").style.display = "block";
 }
-
-document.getElementById("lines").addEventListener("change", function(){
-    drawCube(cube.cubestate);    
-});
-
 
 createCheckboxes();
 drawCube(cube.cubestate);
@@ -136,15 +96,6 @@ clearSubsets.addEventListener("click", function(){
 });
 
 
-var hideTimer = document.getElementById("hideTimer");
-hideTimer.addEventListener("click", function(){
-    setTimerDisplay(!this.checked);
-    localStorage.setItem("hideTimer", this.checked);
-    stopTimer(false);
-    document.getElementById("timer").innerHTML = "0.00";
-
-});
-
 var visualCube = document.getElementById("visualcube");
 visualCube.addEventListener("click", function(){
     var currentView = localStorage.getItem("visualCubeView")
@@ -156,34 +107,12 @@ visualCube.addEventListener("click", function(){
 });
 
 
-var showScramble = document.getElementById("showScramble");
-showScramble.addEventListener("click", function(){
-    localStorage.setItem("showScramble", this.checked);
-});
-
-var realScrambles = document.getElementById("realScrambles");
-realScrambles.addEventListener("click", function(){
-    localStorage.setItem("realScrambles", this.checked);
-});
-
-var prescramble = document.getElementById("prescramble");
-prescramble.addEventListener("click", function(){
-    localStorage.setItem("prescramble", this.checked);
-});
-
 var order = document.getElementById("order");
 order.addEventListener("change", function(){
     localStorage.setItem("order", this.value);
     currentAlgIndex=0;
 });
 
-var goToNextCase = document.getElementById("goToNextCase");
-goToNextCase.addEventListener("click", function(){
-    // if (isUsingVirtualCube()){
-    //     alert("Note: This option has no effect when using the virtual cube.")
-    // }
-    localStorage.setItem("goToNextCase", this.checked);
-});
 
 var userDefined = document.getElementById("userDefined");
 userDefined.addEventListener("click", function(){
@@ -192,12 +121,6 @@ userDefined.addEventListener("click", function(){
 });
 
 
-var cubeType = document.getElementById("cubeType");
-cubeType.addEventListener("change", function(){
-    localStorage.setItem("cubeType", this.value);
-    drawCube(cube.cubestate);
-    updateVisualCube("");
-});
 
 var algsetpicker = document.getElementById("algsetpicker");
 algsetpicker.addEventListener("change", function(){
@@ -277,7 +200,7 @@ function drawCube(cubeArray) {
     //Just Draw Corners when Doing 2x2
     //TODO: Is this a good Idea? Is there a 2x2 draw thing already available for
     //RubiksCube.js?
-    if(document.getElementById("cubeType").value == "2x2"){
+    if("" == "2x2"){
 
         //Clear not used Elements
         fillWithIndex(0, 0, "l", 1, cubeArray,true);
@@ -374,7 +297,7 @@ function drawCube(cubeArray) {
         fillWithIndex(3, 5, "f", 9, cubeArray);
         fillWithIndex(4, 5, "r", 7, cubeArray);
 
-        let lineValue = document.getElementById("lines").value;
+        let lineValue = "none";
         if (lineValue === "none") return;
         // Draw outlines
         if (lineValue === "thin-gray") {
@@ -410,7 +333,7 @@ function doAlg(algorithm){
 
     if (timerIsRunning && cube.isSolved() && isUsingVirtualCube()){
         stopTimer();
-        if (document.getElementById("goToNextCase").checked){
+        if (false){
             nextScramble(false);
         } else {
             displayAlgorithmForPreviousTest(false);
@@ -606,7 +529,7 @@ class AlgTest {
         this.time = time;
         this.set = set;
         this.visualCubeView = visualCubeView;
-        this.cubeType = cubeType;
+        this.cubeType = "3x3";
         this.orientRandPart = orientRandPart;
     }
 }
@@ -630,8 +553,8 @@ function shuffleList(list){
 function generateAlgTest(){
 
     var set = document.getElementById("algsetpicker").value;
-    var obfusticateAlg = document.getElementById("realScrambles").checked;
-    var shouldPrescramble = document.getElementById("prescramble").checked;
+    var obfusticateAlg = true;
+    var shouldPrescramble = true;
 
     var algList = createAlgList()
     if (shouldRecalculateStatistics){
@@ -655,7 +578,7 @@ function generateAlgTest(){
     var [preorientation, orientRandPart] = generateOrientation();
     orientRandPart = alg.cube.simplify(orientRandPart);
 
-    var cubeType = document.getElementById("cubeType");
+    var cubeType = "3x3"
 
     var solveTime = null;
     var time = Date.now();
@@ -668,11 +591,7 @@ function testAlg(algTest, addToHistory=true){
 
     var scramble = document.getElementById("scramble");
 
-    if (document.getElementById("showScramble").checked){
-        scramble.innerHTML = "<span style=\"color: #90f182\">" + algTest.orientRandPart + "</span>" + " " + algTest.scramble;
-    } else{
-        scramble.innerHTML = "&nbsp;";
-    }
+    scramble.innerHTML = "<span style=\"color: #90f182\">" + algTest.orientRandPart + "</span>" + " " + algTest.scramble;
 
     document.getElementById("algdisp").innerHTML = "";
 
@@ -800,7 +719,7 @@ function stripLeadingHashtag(colour){
 
 function updateVisualCube(algorithm){
 
-    switch (document.getElementById("cubeType").value){
+    switch ("3x3"){
         case "2x2":
             var pzl = "2";
             break;
@@ -1169,16 +1088,12 @@ function setVirtualCube(setting){
     } else {
         sim.style.display = 'none';
         document.getElementById("timer").style.display = 'block'; //timer has to be shown when simulator cube is not used
-        document.getElementById("hideTimer").checked = false;
     }
 }
 
 function setTimerDisplay(setting){
     var timer = document.getElementById("timer");
-    if (!isUsingVirtualCube()){
-        document.getElementById("hideTimer").checked = false;
-    }
-    else if (setting){
+    if (setting){
         timer.style.display = 'block';
     } else {
         timer.style.display = 'none';
@@ -1349,7 +1264,7 @@ document.onkeydown = function(event) { //Stops the screen from scrolling down wh
                 if (timerIsRunning){//If timer is running, stop timer
                     var time = stopTimer();
                     doNothingNextTimeSpaceIsPressed = true;
-                    if (document.getElementById("goToNextCase").checked){
+                    if (false){
                         nextScramble(false);
 
                         //document.getElementById("timer").innerHTML = time;

@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title>Train Yu</title>
+        <title>Elikob Trainer</title>
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
         <link rel="stylesheet" type="text/css" href="style.css">
@@ -17,44 +17,20 @@
             <hr>
             <div class=column_left>
 
+                <input id="userDefined" type="checkbox">User defined algset <button id="addSelected">Add currently selected algs</button><br>
+                <textarea id="userDefinedAlgs" cols=50 rows=50 style="display:none" onfocus="listener.stop_listening();" onblur="listener.listen();" placeholder="Place one alg per line. Lines starting with # will be ignored"></textarea>
                 <select id="algsetpicker" size=1 class=algsetpicker>
                 </select>
                 <div id="cboxes"></div>
                 <br>
                 <button id="allSubsets"> All </button>
-                <button id="clearSubsets"> Clear </button><br>
-                <br>
-                <h2>Settings</h2>
+                <button id="clearSubsets"> Clear </button>
                 <form action="javascript:void(0);">
-                    
-                    <input id="hideTimer" type="checkbox">Hide timer<br>
-                    <input id="showScramble" type="checkbox">Show Scramble<br>
-                    <input id="realScrambles" type="checkbox">Real Scrambles<br>
-                    <input id="prescramble" type="checkbox" checked="true">Scramble subsequent steps<br>
-                    Case Selection: <select id="order">
+                    <select id="order">
                         <option value="random"> Random </option>
                         <option value="inOrder"> In order </option>
                         <option value="shuffled"> Shuffled </option>
-                    </select><br>
-                    <input id="goToNextCase" type="checkbox">Next after stopping<br>
-                    Line style: <select id="lines">
-                        <option value="none"> None </option>
-                        <option selected value="thin-black"> Thin black </option>
-                        <option value="thick-black"> Thick black </option>
-                        <option value="thin-gray"> Thin gray </option>
-                        <option value="thick-gray"> Thick gray </option>
-                    </select> <br>
-                    VC Size: <select id="cubeType">
-                        <option value="3x3" default>3x3</option>
-                        <option value="2x2">2x2</option>
-                    </select><br><br>
-                    <button id="connectSmartCube">Connect Smart Cube</button><br>
-                    
-                    <br><br>
-                    
-                    <input id="userDefined" type="checkbox">User defined algset <button id="addSelected">Add currently selected algs</button><br>
-                    <textarea id="userDefinedAlgs" cols=50 rows=50 style="display:none" onfocus="listener.stop_listening();" onblur="listener.listen();" placeholder="Place one alg per line. Lines starting with # will be ignored"></textarea>
-                    <br><br>
+                    </select>
                 </form>
             </div>
 
