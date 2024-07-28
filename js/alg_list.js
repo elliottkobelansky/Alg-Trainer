@@ -13,6 +13,161 @@ var ltct = {
     "DD DFL": ["R2' F' R2 U D' F' D F' U' F R2' F", "U R2' U' R2 U R' D' R U R' D R' U' R2 U2'", "U' D L2' U' L2 U L' D' L U L' D L' U' L2 D'", "U' L2' U' L2 U L' D' L U L' D L' U' L2", "U' D' R' D2 r U2 r' D R2 U' R' U2 R' D R U D", "L2 D' L2' U L U2' L' U L2 D L' U L'", "U' D R' D2 r U2 r' D R2 U' R' U2 R' D R U D'", "U' R' D2 r U2 r' D R2 U' R' U2 R' D R U", "U D' R' U R D' R2' U R U2 R' U R2 U' D2", "U D2 R' U R D' R2' U R U2 R' U R2 U' D'", "U D R' U R D' R2' U R U2 R' U R2 U'", "U R' U R D' R2' U R U2 R' U R2 U' D", "U D R2 U' R2' D' R U R' D R U R U' R' U' R' U' D'", "U R2 U' R2' D' R U R' D R U R U' R' U' R' U'", "L U' L' D L2 U' L' U2' L U' L2' D'", "D' L U' L' D L2 U' L' U2' L U' L2'", "U R2' D R2 U' R' U2 R U' R2' D' R U' R U'", "U D' R2' D R2 U' R' U2 R U' R2' D' R U' R U' D", "U D2 R2' D R2 U' R' U2 R U' R2' D' R U' R U' D2", "U D R2' D R2 U' R' U2 R U' R2' D' R U' R U' D'", "U D R D R U' R' U2 R U' R' D' R' D R U' R' U' D2", "U R D R U' R' U2 R U' R' D' R' D R U' R' U' D'", "U D' R D R U' R' U2 R U' R' D' R' D R U' R' U'", "U D2 R D R U' R' U2 R U' R' D' R' D R U' R' U' D"]
 };
 
+var t2c = {
+  "UU 1": [
+    "R' D' R U2 R' D R U R U2' R' U R U R' U2'",
+    "U S R B' U' R2' U B U' R2 U R' S'",
+    "S R U' R2 U B' U' R2 U B R' S' U'",
+    "U' R' U2 R U R2' D' R U' R' D R U2 R U2'",
+    "U2' R' U2 R' D' R U R' D R2 U' R' U2 R U",
+    "U2 R U' R' U' R U2' R' U' R' D' R U2 R' D R"
+  ],
+  "UU 2": [
+    "U' R U R' U r' F R F' M' U' R U' R'",
+    "R U' R2 D' r U2 r' D R2 U' R' U' R U' R' U",
+    "U' R U R' U R U R2' D' r U2 r' D R2 U R'",
+    "f U' R' U R' U' R2 U2 R' D' R U' R' D f'",
+    "U' R U2' R2' U' R2 U' R' F U' R' U' R U F' U",
+    "R U R' U M F R' F' r U' R U' R' U"
+  ],
+  "UU 3": [
+    "U R' U R U R' U2' R U R D R' U2 R D' R' U",
+    "R U R' U R U R' U2 L R U' R' U L'",
+    "L U' R U R' L' U2 R U' R' U' R U' R'",
+    "U R U2 R D R' U' R D' R2 U R U2 R'",
+    "R U2 R' U' R2 D R' U R D' R' U2 R' U'",
+    "U' R D R' U2 R D' R' U' R' U2 R U' R' U' R U'"
+  ],
+  "UD 1a": [
+    "R' U' R U R' D R U2 D' R D R' U2 R' D' R2",
+    "D R' U' R U R' D R U2 D' R D R' U2 R' D' R2 D'",
+    "D' R' U' R U R' D R U2 D' R D R' U2 R' D' R2 D",
+    "D2 R' U' R U R' D R U2 D' R D R' U2 R' D' R2 D2",
+    "R' U' R D' R' U D R2 D' R' D R' U' D R U R' D'",
+    "R' U' R D' R' U D R2 D' R' D R' U' R U R'",
+    "R' U' R D' R' U D R2 D' R' D R' U' D' R U R' D",
+    "R' U' R' D' R2 D R' U D' R' D R U' R' U R",
+    "U' M' U2 r' D R2 U' R' U' R' D' R",
+    "D U' M' U2 r' D R2 U' R' U' R' D' R D'",
+    "D' U' M' U2 r' D R2 U' R' U' R' D' R D",
+    "D2 U' M' U2 r' D R2 U' R' U' R' D' R D2"
+  ],
+  "UD 1b": [
+    "R' D R U R U R2' D' r U2 M U",
+    "D' R' D R U R U R2' D' r U2 M U D",
+    "D R' D R U R U R2' D' r U2 M U D'",
+    "D2 R' D R U R U R2' D' r U2 M U D2",
+    "R2' D R U2 R D' R' D U2 R' D' R U' R' U R",
+    "D R2' D R U2 R D' R' D U2 R' D' R U' R' U R D'",
+    "D2 R2' D R U2 R D' R' D U2 R' D' R U' R' U R D2",
+    "D' R2' D R U2 R D' R' D U2 R' D' R U' R' U R D",
+    "D R U' R' U D' R' U' R D' R' D U R2 D' R' D R'",
+    "R U' R' U R' U' R D' R' D U R2 D' R' D R'",
+    "D' R U' R' U D R' U' R D' R' D U R2 D' R' D R'",
+    "R' U' R U R' D' R U' D R D' R2' D R U R"
+  ],
+  "UD 2a": [
+    "U R' U' R U2 R' U' R2 D R' U R D' R' U",
+    "D' U R' U' R U2 R' U' R2 D R' U R D' R' U D",
+    "D U R' U' R U2 R' U' R2 D R' U R D' R' U D'",
+    "D2 U R' U' R U2 R' U' R2 D R' U R D' R' U D2",
+    "R' D' R U R' D R2 U' R' U2 R U' R' U2",
+    "D2 R' D' R U R' D R2 U' R' U2 R U' R' U2 D2",
+    "D R' D' R U R' D R2 U' R' U2 R U' R' U2 D'",
+    "D' R' D' R U R' D R2 U' R' U2 R U' R' U2 D",
+    "U R' D R D U' R' U2 R U' R' U' R D' U' R' D' R",
+    "R' D' R U2 D R U' R' U' R U2 R' D' R' D R U",
+    "R D R' D' R' U2 R U' R' U' R U2 D R D' R' U",
+    "U f' L B L2 B2' L F L' B L S"
+  ],
+  "UD 2b": [
+    "U2 R U R' U2 R U R2' D' R U' R' D R",
+    "D U2 R U R' U2 R U R2' D' R U' R' D R D'",
+    "D' U2 R U R' U2 R U R2' D' R U' R' D R D",
+    "D2 U2 R U R' U2 R U R2' D' R U' R' D R D2",
+    "U' R D R' U' R D' R2' U R U2 R' U R U'",
+    "D U' R D R' U' R D' R2' U R U2 R' U R U' D'",
+    "D' U' R D R' U' R D' R2' U R U2 R' U R U' D",
+    "D2 U' R D R' U' R D' R2' U R U2 R' U R U' D2",
+    "R' D R U D R' U R U R' U2 R U D' R' D' R U'",
+    "U' R' D' R D R U2 R' U R U R' U2 D' R' D R",
+    "U' R D R' U2 D' R' U R U R' U2 R D R D' R'",
+    "D' U' R D R' U2 D' R' U R U R' U2 R D R D' R' D"
+  ],
+  "UD 3a": [
+    "D U R U' R' U2 R U' R' D' R' D R U2 R' D' R",
+    "U R U' R' U2 R U' R' D' R' D R U2 R' D' R D",
+    "D U' R D' R' U' R' U' R2 D r' U2 M' D'",
+    "U' R D' R' U' R' U' R2 D r' U2 M'",
+    "U' R U R' U' R D R' U D' R' D R2 D' R' U' R' U",
+    "D U' R U R' U' R D R' U D' R' D R2 D' R' U' R' U D'",
+    "U R' U M F R F' r U R2 U2 R",
+    "D' U' R U R' U' R D R' U D' R' D R2 D' R' U' R' U D",
+    "R' D R U R' D' R2 U' R' U2 R L U' R' U L' U",
+    "R' U' R U D' R' D R U' R2 D' R2 D R2 U R",
+    "D R2' D' R2 U' D' R U R' U' D R D R' D' R' U",
+    "R2' D' R2 U' D' R U R' U' D R D R' D' R' D U"
+  ],
+  "UD 3b": [
+    "U' R D' R' D' U' R2 U' R2 D M U2 r D R'",
+    "R' U' R2 D' R2 D R2 U R' D' R D U' R' U R",
+    "U' R D R D' R' U D' R U' R' U D R2' D R2 D'",
+    "D' U' R D R D' R' U D' R U' R' U D R2' D R2 ",
+    "R' D R U2 R' D' R D R U R' U2 R U R' D' U'",
+    "D' R' D R U2 R' D' R D R U R' U2 R U R' U'",
+    "D R' D R U2 R' D' R D R U R' U2 R U R' D2 U'",
+    "M U2 r D' R2' U R U R D R' U",
+    "U' R U R D R2 D' R D U' R D' R' U R U' R' U",
+    "D U' R U R D R2 D' R D U' R D' R' U R U' R' U D'",
+    "D' U' R U R D R2 D' R D U' R D' R' U R U' R' U D",
+    "R' U2 R2 U' r' F R' F' M' U' R U'"
+  ],
+  "DD 1a": [
+    "R' F R2 U' D R' U R2 U' R2 D' R U R F' R",
+    "L U f' L B L2 B2' L F L' B L S L'",
+    "R U' F' R U R' U' R' F U D R2 D' R' D R' D' R'",
+    "z U R2 D' R D R2 D2' R U R' D R D U' R' U'",
+    "R' U' R U R' D R U' R2 D' R2 D R' D' R' U R",
+    "L' U' M' U2 r' D R2 U' R' U' R' D' R L",
+    "D' R' U' R U R' D R U' R2 D' R2 D R' D' R' U R D",
+    "R D R' U' R U R' D' R' B D R2 D' R' U' R' U B'",
+    "D U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D'",
+    "D2 U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D2",
+    "D' U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D'",
+    "U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U'"
+  ],
+  "DD 1b": [
+    "D U R' U2 R D R' U' R D' R2 U R U2 R' U R2 U' D'",
+    "D' U R' U2 R D R' U' R D' R2 U R U2 R' U R2 U' D",
+    "D2 U R' U2 R D R' U' R D' R2 U R U2 R' U R2 U' D2",
+    "U R' U2 R D R' U' R D' R2 U R U2 R' U R2 U'",
+    "L' U R U2 R' U L U' D R U' R' U R U2 R' D'",
+    "U R' D' M S' D' S r U' R' D2 R' D' R2",
+    "R U' D R U D' R2 D R2 U' R' D' R U R U' R' U R'",
+    "z U R U D' R' D' R U' R' D2 R2 D' R' D R2 U' z'",
+    "R' U' R D R D' R2 D R2 U R' D' R U' R' U R",
+    "L' R' D R U R U R2' D' r U2 M U L",
+    "D' R' U' R D R D' R2 D R2 U R' D' R U' R' U R D",
+    "B U' R U R D R2 D' B' R D R U' R' U R D' R'"
+  ],
+  "DD 2": [
+    "R D' U' R' D U R U' R' D' R2 D R' U2 R' D' R D U'",
+    "D R D' U' R' D U R U' R' D' R2 D R' U2 R' D' R U'",
+    "U R D' R' U R U R' U2 R U D R2 D' R U' R' D R",
+    "D U R D' R' U R U R' U2 R U D R2 D' R U' R' D R D'",
+    "R' D' R D U R2' U' R2 D' U R' D R U R U' R' U2",
+    "R U' R U R' U R' D R U' R2 D' R2 D U' R' D' U R'",
+    "U D' R' D R U2 R D' R2 D R U R' U' D' R U D R'",
+    "U R' D R U2 R D' R2 D R U R' U' D' R U D R' D'",
+    "R' D' R U R' D R2 D' U' R' U2 R U' R' U' R D R' U'",
+    "D R' D' R U R' D R2 D' U' R' U2 R U' R' U' R D R' U' D'",
+    "U2 R U R' U' R' D' R U' D R2' U R2 U' D' R' D R",
+    "R U' D R U D' R2' D R2 U R' D' R U' R U' R' U R'"
+  ]
+};
+
+
 window.algs = {
     "LTCT": ltct,
+    "t2c": t2c
 };
