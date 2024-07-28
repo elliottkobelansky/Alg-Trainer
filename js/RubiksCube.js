@@ -1176,12 +1176,13 @@ function updateControls() {
 
         displayAlgorithmFromHistory(historyIndex);
     });
-    listener.register(new KeyCombo("Enter", {"shift": true}), function(){
+    listener.register(new KeyCombo("Space"), function(){
         var lastTest = algorithmHistory[historyIndex];//[algorithmHistory.length-1];
         var caseAlgs = lastTest.rawAlgs.join("/");
         if(excludedAlgs.indexOf(caseAlgs) === -1){
             excludedAlgs.push(caseAlgs);
             shouldRecalculateStatistics = true;
+            nextScramble();
         }
     });
     listener.register(new KeyCombo("KeyD", {"alt": true, "shift":true}), function(){
