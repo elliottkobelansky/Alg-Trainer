@@ -115,7 +115,7 @@ var t2c = {
     "D' U' R D R D' R' U D' R U' R' U D R2' D R2 ",
     "R' D R U2 R' D' R D R U R' U2 R U R' D' U'",
     "D' R' D R U2 R' D' R D R U R' U2 R U R' U'",
-    "D R' D R U2 R' D' R D R U R' U2 R U R' D2 U'",
+    "D M U2 r D' R2' U R U R D R' U D'",
     "M U2 r D' R2' U R U R D R' U",
     "U' R U R D R2 D' R D U' R D' R' U R U' R' U",
     "D U' R U R D R2 D' R D U' R D' R' U R U' R' U D'",
@@ -133,7 +133,7 @@ var t2c = {
     "R D R' U' R U R' D' R' B D R2 D' R' U' R' U B'",
     "D U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D'",
     "D2 U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D2",
-    "D' U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D'",
+    "D' U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U' D",
     "U R2' U' R U2 R' U' R2 D R' U R D' R' U2 R U'"
   ],
   "DD 1b": [
