@@ -1242,52 +1242,6 @@ document.onkeyup = function(event) {
 };
 
 var doNothingNextTimeSpaceIsPressed = true;
-document.onkeydown = function(event) { //Stops the screen from scrolling down when you press space
-
-    if (event.keyCode == 32) { //space
-        if (document.activeElement.type == "textarea"){
-            return;
-        }
-        event.preventDefault();
-        if (!event.repeat){
-            if (isUsingVirtualCube()){
-                if (timerIsRunning){
-                    stopTimer();
-                    displayAlgorithmForPreviousTest();//put false here if you don't want the cube to retest.
-                    //window.setTimeout(function (){reTestAlg();}, 250);
-                }
-                else {
-                    displayAlgorithmForPreviousTest();
-                }
-
-            }
-            else { //If not using virtual cube
-                if (timerIsRunning){//If timer is running, stop timer
-                    var time = stopTimer();
-                    doNothingNextTimeSpaceIsPressed = true;
-                    if (false){
-                        nextScramble(false);
-
-                        //document.getElementById("timer").innerHTML = time;
-                    } else {
-                        displayAlgorithmForPreviousTest();
-                    }
-
-                }
-                else if (document.getElementById("algdisp").innerHTML != ""){
-                    nextScramble(); //If the solutions are currently displayed, space should test on the next alg.
-
-                    doNothingNextTimeSpaceIsPressed = true;
-                }
-
-                else if (document.getElementById("timer").innerHTML == "Ready"){
-                    document.getElementById("timer").style.color = "green";
-                }
-            }
-        }
-    }
-
-};
 
 class SolveTime {
     constructor(time, penalty) {
