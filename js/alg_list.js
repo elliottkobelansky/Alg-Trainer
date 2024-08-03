@@ -112,7 +112,7 @@ var t2c = {
     "U' R D' R' D' U' R2 U' R2 D M U2 r D R'",
     "R' U' R2 D' R2 D R2 U R' D' R D U' R' U R",
     "U' R D R D' R' U D' R U' R' U D R2' D R2 D'",
-    "D' U' R D R D' R' U D' R U' R' U D R2' D R2 ",
+    "D' U' R D R D' R' U D' R U' R' U D R2' D R2",
     "R' D R U2 R' D' R D R U R' U2 R U R' D' U'",
     "D' R' D R U2 R' D' R D R U R' U2 R U R' U'",
     "D M U2 r D' R2' U R U R D R' U D'",
@@ -166,8 +166,86 @@ var t2c = {
   ]
 };
 
+twoc = {
+  "UU": [
+    "U2 R U' R' U' R U R' U R' D' R U' R' D R2 U R' U",
+    "U L' F' U' L U2 L F' L' f L' U' L S' L' F L",
+    "R U R D R' U' R D' R' U2 R' U' R U' R' U'",
+    "R b R' U' R U' R' U2 R U' b' R' U' R U R'",
+    "U2 F R U R2' F R F' R U' R' F' U'",
+    "D R U' R' U R' D' R U' R U D R' D' R U' R' U R'",
+    "R' U2 R' D' R U' R' D R U R U' R' U' R U'",
+    "U R U' L U L' U R' U' l U2 R U2' l' R'",
+    "R U2' R' U' R' F R2 U' R' U' R U R' F' R U' R'"
+  ],
+  "UD 1": [
+    "R' U' D' R2 U R' D R U' D' R2' D R U R",
+    "D R' U' D' R2 U R' D R U' D' R2' D R U R D'",
+    "D' R' U' D' R2 U R' D R U' D' R2' D R U R D",
+    "D2 R' U' D' R2 U R' D R U' D' R2' D R U R D2",
+    "D R U' R2' D' R2 U D R' D' R U' R' U R'",
+    "R U' R2' D' R2 U D R' D' R U' R' U R' D",
+    "R D' R' D' R U' R' D2 R' D' R2 D R' U R'",
+    "U' R' D R U R' U' D R D' R D R' U R' D' R D' R",
+    "D' R U' R' D2 R' D' R2 D R' U D' R'",
+    "R U' D' R U R' D R2' U' R U R",
+    "D R U' R' D2 R' D' R2 D R' U D' R' D2",
+    "R U' R' D2 R' D' R2 D R' U D' R' D'"
+  ],
+  "UD 2": [
+    "U' R U2' R' L' U R U2' R' U L U' R U' R' U2",
+    "R U2 R2 U D' R U R U2 R2 D R D' R U2 R2 D",
+    "R U2D R' U' R' F R2 U' R' U' R U R' F' R U'D' R'",
+    "L U L' F' U' L U2 L F' L' f L' U' L S' L' F",
+    "r U' r2 U' F U r2 U2 F U F' U2 r'",
+    "R' U' F R U R' D R U' D' R D R2' D' F' R U R",
+    "M' U' r' U r U r' U R U2 f R f'",
+    "R U2D' R' U' R' F R2 U' R' U' R U R' F' R U'D R'",
+    "F R U2' R' U' R U' R' F' R' D R U' R' D' R",
+    "U M' U R U' r' U' R U B U' B' U2' R' U",
+    "L U' R' U L' U' R U2 R' U' R U2 R' U' R U2",
+    "x' U' r U r' U' F' U F U2' R U R' U2' x"
+  ],
+  "UD 3": [
+    "R' U2 R D' R' U D' R' D R2 D' R' D2 R' U R",
+    "D U' R U R U' R' U D R2 U' R' U R2 U' D' R' U D'",
+    "U' R U R U' R' U D R2 U' R' U R2 U' D' R' U",
+    "D R' U2 R D' R' U D' R' D R2 D' R' D2 R' U R D'",
+    "R' D R2 U R' F' R U R' U' R' F R2 U' R' U' R' D' R",
+    "R U' R' D R D' R' D R' D' R2 D R' U R' D'",
+    "D' R U' R' D R D' R' D R' D' R2 D R' U R'",
+    "U' R' U D' R' D R2 D' R' D2 R' U' R U D'",
+    "U' R D' R D' R' U R' D R D' R U' D R' U R D R'",
+    "U R U' R' U2 R' D' R U' R' D R U R U' R' U2",
+    "D' U R U' R' U2 R' D' R U' R' D R U R U' R' U2 D",
+    "l U2 L F' L' U' F l' U' l2 F' l2' "
+  ],
+  "DD 1": [
+    "R' U' D R D' R D R' U R' D' R D' R U' R' D R U",
+    "D U R2' D' R U R U R' U' R U' R D R' U R' U' R D'",
+    "U R2' D' R U R U R' U' R U' R D R' U R' U' R",
+    "D' U R2' D' R U R U R' U' R U' R D R' U R' U' R D",
+    "R U' R U' R2' D R' D' R2 U D R' U D' R'",
+    "D R' U' D R' D' R2 D R' U D' R' D' R U' R' U R",
+    "R' U' D R' D' R2 D R' U D' R' D' R U' R' U D R",
+    "D' R U' R U' R2' D R' D' R2 U D R' U D' R' D",
+    "D2 R U' D R2' U' R D' R' U D R2 D' R' U R' D2",
+    "D' R U' D R2' U' R D' R' U D R2 D' R' U R' D",
+    "R U' D R2' U' R D' R' U D R2 D' R' U R'",
+    "D R U' D R2' U' R D' R' U D R2 D' R' U R' D'"
+  ],
+  "DD 2": [
+    "R' D' R U' R' D R' D' R2 U R U' D R' U D' R' D",
+    "D R U' D' R U R2' U' R D R' U R' U' R U R D'",
+    "U2 R D' R' U2 R U' D' R' D R' D' R2 D R' U D R'",
+    "D R' D' R U' R' D R' D' R2 U R U' D R' U D' R'",
+    "R U' D' R U R2' U' R D R' U R' U' R U R",
+    "D' R U' R' D2 R' D' R D R U R' D' R U' D R' U D' R'"
+  ]
+};
 
 window.algs = {
     "LTCT": ltct,
-    "t2c": t2c
+    "t2c": t2c,
+    "2c": twoc
 };
